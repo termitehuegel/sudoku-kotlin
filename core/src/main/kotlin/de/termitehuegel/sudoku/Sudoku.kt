@@ -1,10 +1,11 @@
 package de.termitehuegel.sudoku
 
 import de.termitehuegel.sudoku.exception.InvalidSudokuException
+import kotlinx.serialization.Serializable
 import kotlin.math.floor
 import kotlin.math.sqrt
 
-
+@Serializable
 class Sudoku {
 
     val field: List<List<Int?>>
