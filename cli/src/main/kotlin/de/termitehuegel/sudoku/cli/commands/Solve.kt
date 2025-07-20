@@ -11,11 +11,11 @@ import java.io.File
 
 class Solve : CliktCommand() {
 
-    val sudoku: Sudoku by argument("Input", help = "The path to the sudoku file that should be solved.")
+    val sudoku: Sudoku by argument("Input", help = "The path to the sudoku file.")
         .file(true, canBeDir = false)
         .convert { Json.decodeFromString(it.readText()) }
 
-    val output: File by argument("Output", help = "The path where the sudoku should be saved.")
+    val output: File by argument("Output", help = "The path to the sudoku file.")
         .file(false)
 
     override fun help(context: Context): String = "Solves a sudoku."

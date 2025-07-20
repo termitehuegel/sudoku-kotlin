@@ -17,7 +17,7 @@ class Empty : CliktCommand() {
         .int()
         .default(9)
 
-    val output: File by argument("Output", help = "The path where the sudoku should be saved.")
+    val output: File by argument("Output", help = "The path to the sudoku file.")
         .file(false)
 
     override fun help(context: Context): String = "Generates an empty sudoku."
