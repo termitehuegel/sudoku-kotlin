@@ -14,6 +14,16 @@ class Sudoku {
 
     val squareSize: Int
 
+    companion object {
+
+        /**
+         * @throws IllegalArgumentException
+         */
+        fun empty(size: Int): Sudoku {
+            return Sudoku(List(size) { List(size) { null } })
+        }
+    }
+
     /**
      * @throws IllegalArgumentException
      */

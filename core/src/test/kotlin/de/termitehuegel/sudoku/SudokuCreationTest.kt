@@ -101,14 +101,12 @@ class SudokuCreationTest {
 
     @Test
     fun empty() {
-        Sudoku(
-            listOf(
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-            )
-        )
+        Sudoku.empty(4)
+    }
+
+    @Test
+    fun emptyNonPerfectSquare() {
+        assertFailsWith<IllegalArgumentException> { Sudoku.empty(5) }
     }
 
     @Test
@@ -116,7 +114,7 @@ class SudokuCreationTest {
         assertFailsWith<IllegalArgumentException> {
             Sudoku(
                 listOf(
-                    listOf(null),
+                    listOf(1),
                 )
             )
         }

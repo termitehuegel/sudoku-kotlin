@@ -25,13 +25,6 @@ class SudokuSolveTest {
 
     @Test
     fun emptySudoku() {
-        Sudoku(
-            listOf(
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-                listOf(null, null, null, null),
-            )
-        ).solve()
+        Sudoku.empty(4).solve()
     }
 }
