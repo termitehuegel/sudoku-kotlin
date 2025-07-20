@@ -4,6 +4,9 @@ import de.termitehuegel.sudoku.exception.InvalidSudokuException
 import kotlin.math.floor
 import kotlin.math.sqrt
 
+/**
+ * @throws IllegalArgumentException
+ */
 data class Sudoku(
     val field: List<List<Int?>>,
 ) {
@@ -13,6 +16,9 @@ data class Sudoku(
 
     val squareSize: Int
 
+    /**
+     * @throws IllegalArgumentException
+     */
     init {
         require(field.all { it.size == field.size }) { "A sudoku field has to be square." }
         require(size > 1) { "Needs more than one tile per row." }
@@ -26,6 +32,9 @@ data class Sudoku(
         require(validation.isSuccess) { "The sudokus is invalid. Because: ${validation.exceptionOrNull()}" }
     }
 
+    /**
+     * @throws IllegalArgumentException
+     */
     fun move(tile: Tile, value: Int): Sudoku {
         require(value in (1..size)) { "The provided value is out of bounds for this sudoku." }
         require(tile.inBounds) { "The provided tile is out of bounds for this sudoku." }
