@@ -4,12 +4,10 @@ import de.termitehuegel.sudoku.exception.InvalidSudokuException
 import kotlin.math.floor
 import kotlin.math.sqrt
 
-/**
- * @throws IllegalArgumentException
- */
-data class Sudoku(
-    val field: List<List<Int?>>,
-) {
+
+class Sudoku {
+
+    val field: List<List<Int?>>
 
     val size
         get() = field.size
@@ -19,7 +17,9 @@ data class Sudoku(
     /**
      * @throws IllegalArgumentException
      */
-    init {
+    constructor(field: List<List<Int?>>) {
+        this.field = field
+
         require(field.all { it.size == field.size }) { "A sudoku field has to be square." }
         require(size > 1) { "Needs more than one tile per row." }
         require(field.all { row -> row.all { value -> value in 1..size || value == null } }) { "All values need to be in bounds." }
@@ -35,18 +35,48 @@ data class Sudoku(
     /**
      * @throws IllegalArgumentException
      */
+    private constructor(sudoku: Sudoku, field: List<List<Int?>>, tile: Tile) {
+        this.field = field
+        this.squareSize = sudoku.squareSize
+
+        val validation: Result<Unit> = runCatching { validateTile(tile) }
+        require(validation.isSuccess) { "The sudokus is invalid. Because: ${validation.exceptionOrNull()}" }
+    }
+
+
+    /**
+     * @throws IllegalArgumentException
+     */
     fun move(tile: Tile, value: Int): Sudoku {
         require(value in (1..size)) { "The provided value is out of bounds for this sudoku." }
         require(tile.inBounds) { "The provided tile is out of bounds for this sudoku." }
         require(tile.value == null) { "The provided tile is already filled." }
 
-        return copy(field.mapIndexed { y, row ->
-            if (tile.y != y) row
-            else row.mapIndexed { x, original ->
-                if (tile.x != x) original
-                else value
+        return Sudoku(
+            sudoku = this,
+            field = field.mapIndexed { y, row ->
+                if (tile.y != y) row
+                else row.mapIndexed { x, original ->
+                    if (tile.x != x) original
+                    else value
+                }
+            },
+            tile = tile
+        )
+    }
+
+    fun solve(): Sudoku {
+        val tiles: List<Tile> = field.flatMapIndexed { y, row ->
+            row.mapIndexed { x, value -> if (value == null) Tile(x, y) else null }.filterNotNull()
+        }
+        val tile: Tile = tiles.firstOrNull() ?: return this
+        (1..size).forEach { value ->
+            val sudoku: Result<Sudoku> = runCatching { move(tile, value).solve() }
+            if (sudoku.isSuccess) {
+                return sudoku.getOrThrow()
             }
-        })
+        }
+        throw InvalidSudokuException("There is no solution to this sudoku.")
     }
 
     /**
