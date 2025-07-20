@@ -22,10 +22,5 @@ class Empty : CliktCommand() {
 
     override fun help(context: Context): String = "Generates an empty sudoku."
 
-    override val autoCompleteEnvvar: String?
-        get() = super.autoCompleteEnvvar
-
-    override fun run() {
-        output.writeText(Json.encodeToString(Sudoku.empty(size)))
-    }
+    override fun run() = output.writeText(Json.encodeToString(Sudoku.empty(size)))
 }
