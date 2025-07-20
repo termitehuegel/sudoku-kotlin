@@ -43,7 +43,6 @@ class Sudoku {
         require(validation.isSuccess) { "The sudokus is invalid. Because: ${validation.exceptionOrNull()}" }
     }
 
-
     /**
      * @throws IllegalArgumentException
      */
@@ -65,6 +64,9 @@ class Sudoku {
         )
     }
 
+    /**
+     * @throws InvalidSudokuException When there is no solution.
+     */
     fun solve(): Sudoku {
         val tiles: List<Tile> = field.flatMapIndexed { y, row ->
             row.mapIndexed { x, value -> if (value == null) Tile(x, y) else null }.filterNotNull()
