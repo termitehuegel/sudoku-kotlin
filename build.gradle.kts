@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "de.termitehuegel"
-    version = "0.0.1"
+    version = "1.0.0"
 
     repositories {
         mavenCentral()
