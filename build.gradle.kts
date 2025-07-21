@@ -18,7 +18,7 @@ subprojects {
 
     dependencies {
         testImplementation(kotlin("test"))
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+        implementation(rootProject.libs.kotlinx.serialization.json)
     }
 
     tasks.test {

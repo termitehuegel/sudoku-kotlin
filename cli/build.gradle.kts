@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
-    implementation("com.github.ajalt.clikt:clikt:5.0.3")
+    implementation(rootProject.libs.clikt)
 }
 
 application {
